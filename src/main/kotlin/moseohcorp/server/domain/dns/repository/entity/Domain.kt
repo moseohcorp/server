@@ -6,19 +6,19 @@ import jakarta.persistence.Entity
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.OneToMany
 import moseohcorp.server._common.entity.BaseAuditingEntity
-import moseohcorp.server.api.dns.dto.request.DNSCreateRequest
-import moseohcorp.server.api.dns.dto.request.DNSUpdateRequest
+import moseohcorp.server.api.dns.dto.request.DomainCreateRequest
+import moseohcorp.server.api.dns.dto.request.DomainUpdateRequest
 import java.text.SimpleDateFormat
 import java.util.Date
 
 @Entity
-class DNS(
-    domain: String,
+class Domain(
+    name: String,
     ipAddress: String,
     adminEmail: String,
 ) : BaseAuditingEntity() {
     @Column(nullable = false)
-    var domain: String = domain
+    var name: String = name
         private set
 
     @Column(nullable = false)
@@ -45,18 +45,18 @@ class DNS(
         this.records.add(record)
     }
 
-    fun update(request: DNSUpdateRequest) {
-        this.domain = request.domain
+    fun update(request: DomainUpdateRequest) {
+        this.name = request.name
         this.ipAddress = request.ipAddress
         this.adminEmail = request.adminEmail
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is DNS) return false
+        if (other !is Domain) return false
         if (!super.equals(other)) return false
 
-        if (domain != other.domain) return false
+        if (name != other.name) return false
         if (ipAddress != other.ipAddress) return false
         if (adminEmail != other.adminEmail) return false
         if (serial != other.serial) return false
@@ -71,7 +71,7 @@ class DNS(
 
     override fun hashCode(): Int {
         var result = super.hashCode()
-        result = 31 * result + domain.hashCode()
+        result = 31 * result + name.hashCode()
         result = 31 * result + ipAddress.hashCode()
         result = 31 * result + adminEmail.hashCode()
         result = 31 * result + serial.hashCode()
@@ -84,8 +84,8 @@ class DNS(
     }
 
     companion object {
-        fun of(request: DNSCreateRequest) = DNS(
-            domain = request.domain,
+        fun of(request: DomainCreateRequest) = Domain(
+            name = request.name,
             ipAddress = request.ipAddress,
             adminEmail = request.adminEmail,
         )

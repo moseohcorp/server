@@ -4,7 +4,6 @@ import jakarta.validation.Valid
 import moseohcorp.server._common.dto.ApiResponse
 import moseohcorp.server.api.dns.dto.request.*
 import moseohcorp.server.domain.dns.BindService
-import moseohcorp.server.domain.dns.DNSService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

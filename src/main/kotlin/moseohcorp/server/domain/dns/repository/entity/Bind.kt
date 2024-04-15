@@ -7,11 +7,11 @@ import moseohcorp.server.api.dns.dto.request.BindUpdateRequest
 
 @Entity
 class Bind(
-    domain: String,
+    specificDomain: String,
     ipAddress: String,
 ) : BaseAuditingEntity() {
     @Column(nullable = false)
-    var domain: String = domain
+    var specificDomain: String = specificDomain
         private set
 
     @Column(nullable = false)
@@ -28,7 +28,7 @@ class Bind(
     }
 
     fun update(request: BindUpdateRequest) {
-        this.domain = request.domain
+        this.specificDomain = request.specificDomain
         this.ipAddress = request.ipAddress
     }
 
@@ -38,7 +38,7 @@ class Bind(
 
     companion object {
         fun of(request: BindCreateRequest) = Bind(
-            domain = request.domain,
+            specificDomain = request.specificDomain,
             ipAddress = request.ipAddress
         )
     }

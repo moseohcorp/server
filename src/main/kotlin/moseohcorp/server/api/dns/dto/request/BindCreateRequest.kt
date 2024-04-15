@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank
 
 data class BindCreateRequest(
     @field:NotBlank
-    val domain: String,
+    val specificDomain: String,
 
     @field:NotBlank
     val ipAddress: String,

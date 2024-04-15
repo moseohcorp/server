@@ -1,36 +1,36 @@
 package fixture.dns
 
-import moseohcorp.server.api.dns.dto.request.DNSCreateRequest
-import moseohcorp.server.api.dns.dto.request.DNSUpdateRequest
-import moseohcorp.server.domain.dns.repository.entity.DNS
+import moseohcorp.server.api.dns.dto.request.DomainCreateRequest
+import moseohcorp.server.api.dns.dto.request.DomainUpdateRequest
+import moseohcorp.server.domain.dns.repository.entity.Domain
 
-object DNSFixture {
-    fun dns(
-        domain: String = "domain",
+object DomainFixture {
+    fun domain(
+        name: String = "domain",
         ipAddress: String = "123.123.123.123",
         adminEmail: String = "azqazq195@gmail.com",
-    ) = DNS(
-        domain = domain,
+    ) = Domain(
+        name = name,
         ipAddress = ipAddress,
         adminEmail = adminEmail
     )
 
-    fun dnsCreateRequest(
-        domain: String = "domain",
+    fun domainCreateRequest(
+        name: String = "domain",
         ipAddress: String = "123.123.123.123",
         adminEmail: String = "azqazq195@gmail.com",
-    ) = DNSCreateRequest(
-        domain = domain,
+    ) = DomainCreateRequest(
+        name = name,
         ipAddress = ipAddress,
         adminEmail = adminEmail
     )
 
-    fun dnsUpdateRequest(
+    fun domainUpdateRequest(
         domain: String = "domain",
         ipAddress: String = "123.123.123.123",
         adminEmail: String = "azqazq195@gmail.com",
-    ) = DNSUpdateRequest(
-        domain = domain,
+    ) = DomainUpdateRequest(
+        name = domain,
         ipAddress = ipAddress,
         adminEmail = adminEmail
     )

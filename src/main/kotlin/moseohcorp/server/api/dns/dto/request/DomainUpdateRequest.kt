@@ -2,9 +2,9 @@ package moseohcorp.server.api.dns.dto.request
 
 import jakarta.validation.constraints.NotBlank
 
-data class DNSUpdateRequest(
+data class DomainUpdateRequest(
     @field:NotBlank
-    val domain: String,
+    val name: String,
 
     @field:NotBlank
     val ipAddress: String,

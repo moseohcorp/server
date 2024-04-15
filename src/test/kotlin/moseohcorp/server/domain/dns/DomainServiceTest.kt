@@ -1,102 +1,102 @@
 package moseohcorp.server.domain.dns
 
-import fixture.dns.DNSFixture
+import fixture.dns.DomainFixture
 import fixture.dns.PortForwardFixture
 import fixture.dns.RecordFixture
 import helper.ServiceTest
 import io.kotest.matchers.shouldBe
 import io.mockk.*
 import moseohcorp.server.domain.dns.exception.PortForwardNotFoundException
-import moseohcorp.server.domain.dns.repository.DNSRepository
+import moseohcorp.server.domain.dns.repository.DomainRepository
 import moseohcorp.server.domain.dns.repository.RecordRepository
-import moseohcorp.server.domain.dns.repository.entity.DNS
+import moseohcorp.server.domain.dns.repository.entity.Domain
 import moseohcorp.server.domain.dns.repository.entity.PortForward
 import moseohcorp.server.domain.dns.repository.entity.Record
 import moseohcorp.server.domain.dns.repository.getEntityById
 
-class DNSServiceTest : ServiceTest({
-    val dnsRepository = mockk<DNSRepository>()
+class DomainServiceTest : ServiceTest({
+    val domainRepository = mockk<DomainRepository>()
     val recordRepository = mockk<RecordRepository>()
-    val dnsService = DNSService(dnsRepository, recordRepository)
+    val domainService = DomainService(domainRepository, recordRepository)
 
-    mockkObject(DNS.Companion)
+    mockkObject(Domain.Companion)
     mockkObject(Record.Companion)
     mockkObject(PortForward.Companion)
 
     Given("create") {
-        val dns = DNSFixture.dns()
-        val request = DNSFixture.dnsCreateRequest()
+        val domain = DomainFixture.domain()
+        val request = DomainFixture.domainCreateRequest()
 
         When("요청을 한다면") {
-            every { DNS.of(request) } returns dns
-            every { dnsRepository.save(dns) } returns dns
+            every { Domain.of(request) } returns domain
+            every { domainRepository.save(domain) } returns domain
 
-            dnsService.create(request)
+            domainService.create(request)
 
             Then("수행한다.") {
-                verify(exactly = 1) { DNS.of(request) }
-                verify(exactly = 1) { dnsRepository.save(dns) }
+                verify(exactly = 1) { Domain.of(request) }
+                verify(exactly = 1) { domainRepository.save(domain) }
             }
         }
     }
 
     Given("update") {
-        val dns = DNSFixture.dns()
-        val request = DNSFixture.dnsUpdateRequest(domain = "updated")
-        val updatedDns = DNSFixture.dns()
+        val domain = DomainFixture.domain()
+        val request = DomainFixture.domainUpdateRequest(domain = "updated")
+        val updatedDns = DomainFixture.domain()
         updatedDns.update(request)
 
         When("요청을 한다면") {
-            every { dnsRepository.getEntityById(dns.id) } returns dns
-            every { dnsRepository.save(dns) } returns dns
+            every { domainRepository.getEntityById(domain.id) } returns domain
+            every { domainRepository.save(domain) } returns domain
 
-            dnsService.update(dns.id, request)
+            domainService.update(domain.id, request)
 
             Then("업데이트 된다.") {
-                dns shouldBe updatedDns
+                domain shouldBe updatedDns
 
-                verify(exactly = 1) { dnsRepository.getEntityById(dns.id) }
-                verify(exactly = 1) { dnsRepository.save(dns) }
+                verify(exactly = 1) { domainRepository.getEntityById(domain.id) }
+                verify(exactly = 1) { domainRepository.save(domain) }
             }
         }
     }
 
     Given("delete") {
-        val dnsId: Long = 1
+        val domainId: Long = 1
 
         When("요청을 한다면") {
-            every { dnsRepository.existsById(dnsId) } returns true
-            every { dnsRepository.deleteById(dnsId) } just runs
+            every { domainRepository.existsById(domainId) } returns true
+            every { domainRepository.deleteById(domainId) } just runs
 
-            dnsService.delete(dnsId)
+            domainService.delete(domainId)
 
             Then("수행한다.") {
-                verify(exactly = 1) { dnsRepository.existsById(dnsId) }
-                verify(exactly = 1) { dnsRepository.deleteById(dnsId) }
+                verify(exactly = 1) { domainRepository.existsById(domainId) }
+                verify(exactly = 1) { domainRepository.deleteById(domainId) }
             }
         }
     }
 
     Given("addRecord") {
-        val dns = DNSFixture.dns()
+        val domain = DomainFixture.domain()
         val record = RecordFixture.record()
         val request = RecordFixture.recordCreateRequest()
-        val added = DNSFixture.dns()
+        val added = DomainFixture.domain()
         added.add(record)
 
         When("요청을 한다면") {
             every { Record.of(request) } returns record
-            every { dnsRepository.getEntityById(dns.id) } returns dns
-            every { dnsRepository.save(dns) } returns dns
+            every { domainRepository.getEntityById(domain.id) } returns domain
+            every { domainRepository.save(domain) } returns domain
 
-            dnsService.addRecord(dns.id, request)
+            domainService.addRecord(domain.id, request)
 
             Then("수행한다.") {
-                dns shouldBe added
+                domain shouldBe added
 
-                verify(exactly = 1) { dnsRepository.getEntityById(dns.id) }
+                verify(exactly = 1) { domainRepository.getEntityById(domain.id) }
                 verify(exactly = 1) { Record.of(request) }
-                verify(exactly = 1) { dnsRepository.save(dns) }
+                verify(exactly = 1) { domainRepository.save(domain) }
             }
         }
     }
@@ -111,7 +111,7 @@ class DNSServiceTest : ServiceTest({
             every { recordRepository.getEntityById(record.id) } returns record
             every { recordRepository.save(record) } returns record
 
-            dnsService.updateRecord(record.id, request)
+            domainService.updateRecord(record.id, request)
 
             Then("수행한다.") {
                 record shouldBe updated
@@ -129,7 +129,7 @@ class DNSServiceTest : ServiceTest({
             every { recordRepository.existsById(recordId) } returns true
             every { recordRepository.deleteById(recordId) } just runs
 
-            dnsService.removeRecord(recordId)
+            domainService.removeRecord(recordId)
 
             Then("수행한다.") {
                 verify(exactly = 1) { recordRepository.existsById(recordId) }
@@ -150,7 +150,7 @@ class DNSServiceTest : ServiceTest({
             every { PortForward.of(request) } returns portForward
             every { recordRepository.save(record) } returns record
 
-            dnsService.addPortForward(record.id, request)
+            domainService.addPortForward(record.id, request)
 
             Then("수행한다.") {
                 record shouldBe added
@@ -174,7 +174,7 @@ class DNSServiceTest : ServiceTest({
             every { recordRepository.getEntityById(record.id) } returns record
             every { recordRepository.save(record) } returns record
 
-            dnsService.updatePortForward(record.id, request)
+            domainService.updatePortForward(record.id, request)
 
             Then("수행한다.") {
                 record shouldBe updated
@@ -194,7 +194,7 @@ class DNSServiceTest : ServiceTest({
             every { recordRepository.getEntityById(record.id) } returns record
             every { recordRepository.save(record) } returns record
 
-            dnsService.removePortForward(record.id)
+            domainService.removePortForward(record.id)
 
             Then("수행한다.") {
                 record shouldBe removed

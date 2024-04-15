@@ -6,26 +6,26 @@ import moseohcorp.server.domain.dns.repository.entity.Bind
 
 object BindFixture {
     fun bind(
-        domain: String = "domain",
+        specificDomain: String = "domain",
         ipAddress: String = "123.123.123.123",
     ) = Bind(
-        domain = domain,
+        specificDomain = specificDomain,
         ipAddress = ipAddress
     )
 
     fun bindCreateRequest(
-        domain: String = "domain",
+        specificDomain: String = "domain",
         ipAddress: String = "123.123.123.123",
     ) = BindCreateRequest(
-        domain = domain,
+        specificDomain = specificDomain,
         ipAddress = ipAddress
     )
 
     fun bindUpdateRequest(
-        domain: String = "domain",
+        specificDomain: String = "domain",
         ipAddress: String = "123.123.123.123",
     ) = BindUpdateRequest(
-        domain = domain,
+        specificDomain = specificDomain,
         ipAddress = ipAddress
     )
 }

@@ -16,7 +16,7 @@ enum class ErrorCode(
     /**
      * DNS
      */
-    DNS_NOT_FOUND(HttpStatus.NOT_FOUND, "DNS not found."),
+    DOMAIN_NOT_FOUND(HttpStatus.NOT_FOUND, "Domain not found."),
     RECORD_NOT_FOUND(HttpStatus.NOT_FOUND, "Record not found."),
     BIND_NOT_FOUND(HttpStatus.NOT_FOUND, "Bind not found."),
     PORT_FORWARD_NOT_FOUND(HttpStatus.NOT_FOUND, "Port forward not found."),

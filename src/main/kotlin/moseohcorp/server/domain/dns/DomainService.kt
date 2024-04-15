@@ -1,46 +1,46 @@
 package moseohcorp.server.domain.dns
 
 import moseohcorp.server.api.dns.dto.request.*
-import moseohcorp.server.domain.dns.exception.DNSNotFoundException
+import moseohcorp.server.domain.dns.exception.DomainNotFoundException
 import moseohcorp.server.domain.dns.exception.PortForwardNotFoundException
 import moseohcorp.server.domain.dns.exception.RecordNotFoundException
 import moseohcorp.server.domain.dns.repository.*
-import moseohcorp.server.domain.dns.repository.entity.DNS
+import moseohcorp.server.domain.dns.repository.entity.Domain
 import moseohcorp.server.domain.dns.repository.entity.PortForward
 import moseohcorp.server.domain.dns.repository.entity.Record
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class DNSService(
-    private val dnsRepository: DNSRepository,
+class DomainService(
+    private val domainRepository: DomainRepository,
     private val recordRepository: RecordRepository,
 ) {
     @Transactional
-    fun create(request: DNSCreateRequest) {
-        val dns = DNS.of(request)
-        dnsRepository.save(dns)
+    fun create(request: DomainCreateRequest) {
+        val domain = Domain.of(request)
+        domainRepository.save(domain)
     }
 
     @Transactional
-    fun update(dnsId: Long, request: DNSUpdateRequest) {
-        val dns = dnsRepository.getEntityById(dnsId)
+    fun update(dnsId: Long, request: DomainUpdateRequest) {
+        val dns = domainRepository.getEntityById(dnsId)
         dns.update(request)
-        dnsRepository.save(dns)
+        domainRepository.save(dns)
     }
 
     @Transactional
     fun delete(dnsId: Long) {
-        check(dnsRepository.existsById(dnsId)) { DNSNotFoundException() }
-        dnsRepository.deleteById(dnsId)
+        check(domainRepository.existsById(dnsId)) { DomainNotFoundException() }
+        domainRepository.deleteById(dnsId)
     }
 
     @Transactional
     fun addRecord(dnsId: Long, request: RecordCreateRequest) {
-        val dns = dnsRepository.getEntityById(dnsId)
+        val dns = domainRepository.getEntityById(dnsId)
         val record = Record.of(request)
         dns.add(record)
-        dnsRepository.save(dns)
+        domainRepository.save(dns)
     }
 
     @Transactional

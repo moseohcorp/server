@@ -1,7 +1,7 @@
 package moseohcorp.server.api.dns.dto.response
 
-data class DnsResponse(
-    val domain: String,
+data class DomainResponse(
+    val name: String,
     val ipAddress: String,
     val adminEmail: String,
     val serial: String,

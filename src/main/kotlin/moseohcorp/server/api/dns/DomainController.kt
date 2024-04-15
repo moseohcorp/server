@@ -3,30 +3,30 @@ package moseohcorp.server.api.dns
 import jakarta.validation.Valid
 import moseohcorp.server._common.dto.ApiResponse
 import moseohcorp.server.api.dns.dto.request.*
-import moseohcorp.server.domain.dns.DNSService
+import moseohcorp.server.domain.dns.DomainService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/dns")
-class DNSController(
-    private val dnsService: DNSService,
+@RequestMapping("/domain")
+class DomainController(
+    private val domainService: DomainService,
 ) {
     @PostMapping("")
     fun create(
-        @RequestBody @Valid request: DNSCreateRequest
+        @RequestBody @Valid request: DomainCreateRequest
     ): ResponseEntity<ApiResponse> {
-        dnsService.create(request)
+        domainService.create(request)
         return ApiResponse.of(status = HttpStatus.CREATED)
     }
 
     @PutMapping("/{id}")
     fun update(
         @PathVariable id: Long,
-        @RequestBody @Valid request: DNSUpdateRequest
+        @RequestBody @Valid request: DomainUpdateRequest
     ): ResponseEntity<ApiResponse> {
-        dnsService.update(id, request)
+        domainService.update(id, request)
         return ApiResponse.of(status = HttpStatus.OK)
     }
 
@@ -34,7 +34,7 @@ class DNSController(
     fun delete(
         @PathVariable id: Long
     ): ResponseEntity<ApiResponse> {
-        dnsService.delete(id)
+        domainService.delete(id)
         return ApiResponse.of(status = HttpStatus.OK)
     }
 
@@ -43,7 +43,7 @@ class DNSController(
         @PathVariable dnsId: Long,
         @RequestBody @Valid request: RecordCreateRequest
     ): ResponseEntity<ApiResponse> {
-        dnsService.addRecord(dnsId, request)
+        domainService.addRecord(dnsId, request)
         return ApiResponse.of(status = HttpStatus.CREATED)
     }
 
@@ -53,7 +53,7 @@ class DNSController(
         @PathVariable recordId: Long,
         @RequestBody @Valid request: RecordUpdateRequest
     ): ResponseEntity<ApiResponse> {
-        dnsService.updateRecord(recordId, request)
+        domainService.updateRecord(recordId, request)
         return ApiResponse.of(status = HttpStatus.OK)
     }
 
@@ -62,7 +62,7 @@ class DNSController(
         @PathVariable dnsId: Long,
         @PathVariable recordId: Long,
     ): ResponseEntity<ApiResponse> {
-        dnsService.removeRecord(recordId)
+        domainService.removeRecord(recordId)
         return ApiResponse.of(status = HttpStatus.OK)
     }
 
@@ -72,7 +72,7 @@ class DNSController(
         @PathVariable recordId: Long,
         @RequestBody @Valid request: PortForwardCreateRequest,
     ): ResponseEntity<ApiResponse> {
-        dnsService.addPortForward(recordId, request)
+        domainService.addPortForward(recordId, request)
         return ApiResponse.of(status = HttpStatus.CREATED)
     }
 
@@ -82,7 +82,7 @@ class DNSController(
         @PathVariable recordId: Long,
         @RequestBody @Valid request: PortForwardUpdateRequest,
     ): ResponseEntity<ApiResponse> {
-        dnsService.updatePortForward(recordId, request)
+        domainService.updatePortForward(recordId, request)
         return ApiResponse.of(status = HttpStatus.OK)
     }
 
@@ -91,7 +91,7 @@ class DNSController(
         @PathVariable dnsId: Long,
         @PathVariable recordId: Long,
     ): ResponseEntity<ApiResponse> {
-        dnsService.removePortForward(recordId)
+        domainService.removePortForward(recordId)
         return ApiResponse.of(status = HttpStatus.OK)
     }
 }
