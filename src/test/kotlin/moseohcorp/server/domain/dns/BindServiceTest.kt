@@ -37,7 +37,7 @@ class BindServiceTest : ServiceTest({
 
     Given("update") {
         val bind = BindFixture.bind()
-        val request = BindFixture.bindUpdateRequest(domain = "updated")
+        val request = BindFixture.bindUpdateRequest(specificDomain = "updated")
         val updatedBind = BindFixture.bind()
         updatedBind.update(request)
 
