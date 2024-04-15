@@ -23,7 +23,7 @@ class Bind(
     var portForward: PortForward? = null
         private set
 
-    fun update(portForward: PortForward) {
+    fun add(portForward: PortForward) {
         this.portForward = portForward
     }
 

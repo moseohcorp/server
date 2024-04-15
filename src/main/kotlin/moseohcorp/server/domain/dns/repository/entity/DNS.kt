@@ -51,6 +51,38 @@ class DNS(
         this.adminEmail = request.adminEmail
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is DNS) return false
+        if (!super.equals(other)) return false
+
+        if (domain != other.domain) return false
+        if (ipAddress != other.ipAddress) return false
+        if (adminEmail != other.adminEmail) return false
+        if (serial != other.serial) return false
+        if (records != other.records) return false
+        if (refresh != other.refresh) return false
+        if (retry != other.retry) return false
+        if (expire != other.expire) return false
+        if (minimum != other.minimum) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + domain.hashCode()
+        result = 31 * result + ipAddress.hashCode()
+        result = 31 * result + adminEmail.hashCode()
+        result = 31 * result + serial.hashCode()
+        result = 31 * result + records.hashCode()
+        result = 31 * result + refresh
+        result = 31 * result + retry
+        result = 31 * result + expire
+        result = 31 * result + minimum
+        return result
+    }
+
     companion object {
         fun of(request: DNSCreateRequest) = DNS(
             domain = request.domain,

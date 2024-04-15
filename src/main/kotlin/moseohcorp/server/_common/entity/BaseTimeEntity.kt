@@ -14,4 +14,24 @@ abstract class BaseTimeEntity : BaseEntity() {
     @LastModifiedDate
     var modifiedAt: LocalDateTime = LocalDateTime.now()
         protected set
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is BaseTimeEntity) return false
+        if (!super.equals(other)) return false
+
+        if (createdAt != other.createdAt) return false
+        if (modifiedAt != other.modifiedAt) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + createdAt.hashCode()
+        result = 31 * result + modifiedAt.hashCode()
+        return result
+    }
+
+
 }

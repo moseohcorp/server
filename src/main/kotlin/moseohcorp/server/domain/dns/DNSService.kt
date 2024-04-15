@@ -60,7 +60,7 @@ class DNSService(
     fun addPortForward(recordId: Long, request: PortForwardCreateRequest) {
         val record = recordRepository.getEntityById(recordId)
         val portForward = PortForward.of(request)
-        record.update(portForward)
+        record.add(portForward)
         recordRepository.save(record)
     }
 

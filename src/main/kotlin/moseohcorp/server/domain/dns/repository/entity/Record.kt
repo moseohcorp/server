@@ -34,7 +34,7 @@ class Record(
         CNAME
     }
 
-    fun update(portForward: PortForward) {
+    fun add(portForward: PortForward) {
         this.portForward = portForward
     }
 

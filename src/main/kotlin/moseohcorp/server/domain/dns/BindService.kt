@@ -40,7 +40,7 @@ class BindService(
     fun addPortForward(bindId: Long, request: PortForwardCreateRequest) {
         val bind = bindRepository.getEntityById(bindId)
         val portForward = PortForward.of(request)
-        bind.update(portForward)
+        bind.add(portForward)
         bindRepository.save(bind)
     }
 
